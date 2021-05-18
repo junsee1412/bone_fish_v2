@@ -1,0 +1,27 @@
+<form action="http://localhost:3000/api/bill" id="form" enctype="application/x-www-form-urlencoded">
+    <!-- <input type="text" name="token"> -->
+    <!-- <input type="text" name="bill"> -->
+    <input type="button" value="submit" id="submit">
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(() => {
+        $('#submit').click(() => {
+            var form = $('#form')[0]
+            let datas = new FormData(form)
+            let items = [{id_product: "60a33979069c03a5cd7de565", quantity: 22, price: 23}, {id_product: "60a3d2d43428fd632cd3b3d7", quantity: 33, price: 55}]
+            datas.append(items,items)
+            datas.append(bill, 'nttd')
+            alert(data.get('bill'))
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "http://localhost:3000/api/bill",
+                data: datas,
+                processData: false,
+                contentType: false,
+                cache: false,
+            })
+        })
+    })
+</script>
