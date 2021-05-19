@@ -24,6 +24,8 @@ module.exports = app => {
     app.delete('/api/product', product_control.apiDeleteProduct)
 
     app.post('/api/bill', bill_control.apiCreateBill)
+    app.get('/api/:token/bill', bill_control.apiBill)
+    app.get('/api/:token/bill/:id', bill_control.apigetById)
 
     app.post('/api/login', user_control.apiLogin)
     app.put('/api/user', user_control.apiUpdatePass)
