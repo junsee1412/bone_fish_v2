@@ -87,7 +87,7 @@ Category.updateById = (id_category, iduser, newcategory, rs) => {
                     throw error
                 } else {
                     console.log('odlCategory: '+result.value.category+'\nnewCategory: '+newcategory)
-                    rs(null,{message:'update success'})
+                    rs(null, result)
                 }
             })
         }
@@ -107,7 +107,7 @@ Category.deleteById = (id_category, iduser, rs) => {
                     throw error
                 } else {
                     console.log('deleteCategory: '+result.value.category)
-                    rs(null,{message:'delete success'})
+                    rs(null, result)
                 }
             })
         }

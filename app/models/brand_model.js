@@ -57,7 +57,7 @@ Brand.create = (brand, rs) => {
         } else {
             insertBrand(brand, (data) => {
                 console.log(data.ops[0])
-                rs(null,data.ops[0])
+                rs(null, data)
                 // data.ops[0]._id to get id insert
             })
         }
@@ -87,7 +87,7 @@ Brand.updateById = (id_brand, iduser, newbrand, rs) => {
                     throw error
                 } else {
                     console.log('odlBrand: '+result.value.brand+'\nnewBrand: '+newbrand)
-                    rs(null,{message:'update success'})
+                    rs(null, result)
                 }
             })
         }
@@ -107,7 +107,7 @@ Brand.deleteById = (id_brand, iduser, rs) => {
                     throw error
                 } else {
                     console.log('deleteBrand: '+result.value.brand)
-                    rs(null,{message:'delete success'})
+                    rs(null, result)
                 }
             })
         }

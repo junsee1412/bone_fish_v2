@@ -59,7 +59,7 @@ Bill.create = (bill, rs) => {
         } else {
             insertBill(bill, (data) => {
                 console.log(data.ops[0])
-                rs(null,data.ops[0])
+                rs(null, data)
                 // data.ops[0]._id to get id insert
             })
         }

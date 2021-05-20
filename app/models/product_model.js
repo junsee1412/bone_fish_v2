@@ -92,7 +92,7 @@ Product.updateById = (id_product, iduser, newproduct, rs) => {
                     throw error
                 } else {
                     console.log('odlProduct: '+result.value.product+'\nnewProduct: '+newproduct)
-                    rs(null,{message:'update success'})
+                    rs(null, result)
                 }
             })
         }
@@ -112,7 +112,7 @@ Product.updateStock = (id_product, iduser, stock, rs) => {
                     throw error
                 } else {
                     console.log('odlProductStock: '+result.value.stock+'\nnewProductStock: '+stock)
-                    rs(null,{message:'update success'})
+                    rs(null, result)
                 }
             })
         }
@@ -132,7 +132,7 @@ Product.deleteById = (id_product, iduser, rs) => {
                     throw error
                 } else {
                     console.log('deleteProduct: '+result.value.product)
-                    rs(null,{message:'delete success'})
+                    rs(null, result)
                 }
             })
         }

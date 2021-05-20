@@ -4,12 +4,12 @@ const checkToken = require('../models/checkToken.js')
 exports.apiBrand = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Brand.getAll(iduser,(err, data) => {
-        if (err) res.send({message: "cannot access"})
+        if (err) res.status(500).send({message: "cannot access"})
         else {
-            res.json({"listBrand":data})
+            res.json(data)
         }
     })
 }
@@ -17,10 +17,10 @@ exports.apiBrand = (req, res) => {
 exports.apigetById = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Brand.getOne(iduser, req.params.id, (err, data) => {
-        if (err) res.send({message: "cannot access"})
+        if (err) res.status(500).send({message: "cannot access"})
         else {
             res.json(data)
         }
@@ -30,16 +30,16 @@ exports.apigetById = (req, res) => {
 exports.apiCreateBrand = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else {
         const brand = new Brand({
             id_user : iduser,
             brand : req.body.brand
         })
         Brand.create(brand, (err, data) => {
-            if (err) res.send({message: "cannot create"})
+            if (err) res.status(500).send({message: "cannot create"})
             else {
-                res.json(data)
+                res.json({message:'create success'})
             }
         })
     }
@@ -48,12 +48,12 @@ exports.apiCreateBrand = (req, res) => {
 exports.apiUpdateBrand = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Brand.updateById(req.body.idbrand, iduser, req.body.brand, (err, data) => {
-        if (err) res.send({message: "cannot update"})
+        if (err) res.status(500).send({message: "cannot update"})
         else {
-            res.json(data)
+            res.json({message:'update success'})
         }
     })
 }
@@ -61,12 +61,12 @@ exports.apiUpdateBrand = (req, res) => {
 exports.apiDeleteBrand = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Brand.deleteById(req.body.idbrand, iduser, (err, data) => {
-        if (err) res.send({message: "cannot delete"})
+        if (err) res.status(500).send({message: "cannot delete"})
         else {
-            res.json(data)
+            res.json({message:'delete success'})
         }
     })
 }

@@ -4,19 +4,19 @@ const checkToken = require('../models/checkToken.js')
 exports.apiUser = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     User.getAll(iduser,(err, data) => {
-        if (err) res.send({message: "cannot access"})
+        if (err) res.status(500).send({message: "cannot access"})
         else {
-            res.json({"listUser":data})
+            res.json(data)
         }
     })
 }
 
 exports.apiLogin = (req, res) => {
     User.getLogin(req.body.email, req.body.pass, (err, data) => {
-        if (err) res.send({message: "cannot login"})
+        if (err) res.status(500).send({message: "cannot login"})
         else {
             console.log(data._id)
             res.json({"token": checkToken.tokenCreate(data._id)})
@@ -31,9 +31,9 @@ exports.apiCreateUser = (req, res) => {
         role: false
     })
     User.create(user, (err, data) => {
-        if (err) res.send({message: "cannot create"})
+        if (err) res.status(500).send({message: "cannot create"})
         else {
-            res.json(data)
+            res.json({message:'create success'})
         }
     })
 }
@@ -41,12 +41,12 @@ exports.apiCreateUser = (req, res) => {
 exports.apiUpdatePass = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     User.updatePassword(iduser, req.body.newpass, req.body.pass, (err, data) => {
-        if (err) res.send({message: "cannot update"})
+        if (err) res.status(500).send({message: "cannot update"})
         else {
-            res.json(data)
+            res.json({message:'update success'})
         }
     })
 }
@@ -54,12 +54,12 @@ exports.apiUpdatePass = (req, res) => {
 exports.apiDeleteUser = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     User.deleteUser(iduser, req.body.pass, (err, data) => {
-        if (err) res.send({message: "cannot delete"})
+        if (err) res.status(500).send({message: "cannot delete"})
         else {
-            res.json(data)
+            res.json({message:'delete success'})
         }
     })
 }

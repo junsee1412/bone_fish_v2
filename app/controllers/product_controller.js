@@ -14,12 +14,12 @@ const upload = multer({ storage: storage }).single('img')
 exports.apiProduct = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Product.getAll(iduser,(err, data) => {
-        if (err) res.send({message: "cannot access"})
+        if (err) res.status(500).send({message: "cannot access"})
         else {
-            res.json({"listProduct":data})
+            res.json(data)
         }
     })
 }
@@ -27,10 +27,10 @@ exports.apiProduct = (req, res) => {
 exports.apigetById = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Product.getOne(iduser, req.params.id, (err, data) => {
-        if (err) res.send({message: "cannot access"})
+        if (err) res.status(500).send({message: "cannot access"})
         else {
             res.json(data)
         }
@@ -41,13 +41,13 @@ exports.apiCreateProduct = (req, res) => {
     upload(req, res, (error) => {
         if (error instanceof multer.MulterError) {
             console.log(error)
-            res.send({message: 'cannot upfile 1'})
+            res.status(500).send({message: 'cannot upfile 1'})
         } else if (error) {
-            res.send({message: 'cannot upfile 2'})
+            res.status(500).send({message: 'cannot upfile 2'})
         } else {
             let iduser = checkToken.tokenToId(req.body.token)
             if (iduser===null) {
-                res.send({login: "false"})
+                res.status(500).send({message: "please login"})
             } else {
                 const product = new Product({
                     id_brand : req.body.idbrand,
@@ -59,9 +59,9 @@ exports.apiCreateProduct = (req, res) => {
                     img : "/"+req.file.path 
                 })
                 Product.create(product, (err, data) => {
-                    if (err) res.send({message: "cannot create"})
+                    if (err) res.status(500).send({message: "cannot create"})
                     else {
-                        res.json(data)
+                        res.json({message:'create success'})
                     }
                 })
             }
@@ -72,12 +72,12 @@ exports.apiCreateProduct = (req, res) => {
 exports.apiUpdateProduct = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Product.updateById(req.body.idproduct, iduser, req.body.product, (err, data) => {
-        if (err) res.send({message: "cannot update"})
+        if (err) res.status(500).send({message: "cannot update"})
         else {
-            res.json(data)
+            res.json({message:'update success'})
         }
     })
 }
@@ -85,12 +85,12 @@ exports.apiUpdateProduct = (req, res) => {
 exports.apiDeleteProduct = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Product.deleteById(req.body.idproduct, iduser, (err, data) => {
-        if (err) res.send({message: "cannot delete"})
+        if (err) res.status(500).send({message: "cannot delete"})
         else {
-            res.json(data)
+            res.json({message:'delete success'})
         }
     })
 }

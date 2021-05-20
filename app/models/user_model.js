@@ -107,7 +107,7 @@ User.updatePassword = (iduser, newpass, pass, rs) => {
                     return
                 } else {
                     console.log('odlPass: '+result.value.pass+'\nnewPass: '+newpass)
-                    rs(null, {message:'update success'})
+                    rs(null, result)
                 }
             })
         }
@@ -129,7 +129,7 @@ User.deleteUser = (iduser, pass, rs) => {
                 } else {
                     console.log('deleteUser: '+result.value.email)
                     // rs(null, result)
-                    rs(null,{message:'delete success'})
+                    rs(null, result)
                 }
             })
         }

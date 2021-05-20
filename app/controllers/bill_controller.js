@@ -4,12 +4,12 @@ const checkToken = require('../models/checkToken.js')
 exports.apiBill = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Bill.getAll(iduser,(err, data) => {
-        if (err) res.send({message: "cannot access"})
+        if (err) res.status(500).send({message: "cannot access"})
         else {
-            res.json({"listBill":data})
+            res.json(data)
         }
     })
 }
@@ -17,10 +17,10 @@ exports.apiBill = (req, res) => {
 exports.apigetById = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else
     Bill.getOne(iduser, req.params.id, (err, data) => {
-        if (err) res.send({message: "cannot access"})
+        if (err) res.status(500).send({message: "cannot access"})
         else {
             res.json(data)
         }
@@ -30,7 +30,7 @@ exports.apigetById = (req, res) => {
 exports.apiCreateBill = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.send({login: "false"})
+        res.status(500).send({message: "please login"})
     } else {
         const bill = new Bill({
             id_user : iduser,
@@ -39,9 +39,9 @@ exports.apiCreateBill = (req, res) => {
             items : req.body.items
         })
         Bill.create(bill, (err, data) => {
-            if (err) res.send({message: "cannot create"})
+            if (err) res.status(500).send({message: "cannot create"})
             else {
-                res.json(data)
+                res.json({message:'create success'})
             }
         })
     }
