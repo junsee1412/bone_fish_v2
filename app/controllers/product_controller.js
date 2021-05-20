@@ -19,7 +19,7 @@ exports.apiProduct = (req, res) => {
     Product.getAll(iduser,(err, data) => {
         if (err) res.status(500).send({message: "cannot access"})
         else {
-            res.json(data)
+            res.json({listProduct:data})
         }
     })
 }
