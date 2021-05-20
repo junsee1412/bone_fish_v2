@@ -9,7 +9,7 @@ exports.apiUser = (req, res) => {
     User.getAll(iduser,(err, data) => {
         if (err) res.status(500).send({message: "cannot access"})
         else {
-            res.json({listUser:data})
+            res.json(data)
         }
     })
 }

@@ -9,7 +9,7 @@ exports.apiCategory = (req, res) => {
     Category.getAll(iduser,(err, data) => {
         if (err) res.status(500).send({message: "cannot access"})
         else {
-            res.json({listCategory:data})
+            res.json(data)
         }
     })
 }

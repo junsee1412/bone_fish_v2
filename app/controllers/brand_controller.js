@@ -9,7 +9,7 @@ exports.apiBrand = (req, res) => {
     Brand.getAll(iduser,(err, data) => {
         if (err) res.status(500).send({message: "cannot access"})
         else {
-            res.json({listBrand:data})
+            res.json(data)
         }
     })
 }
