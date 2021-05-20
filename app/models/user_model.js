@@ -2,8 +2,8 @@ const client = require('./db.js')
 var ObjectId = require('mongodb').ObjectID;
 
 const User = function(user){
-    this.name_user = user.name_user
-    this.pass_user = user.pass_user
+    this.email = user.email
+    this.pass = user.pass
     this.role = user.role
 }
 

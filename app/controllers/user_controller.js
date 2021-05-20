@@ -33,7 +33,7 @@ exports.apiCreateUser = (req, res) => {
     User.create(user, (err, data) => {
         if (err) res.status(500).send({message: "cannot create"})
         else {
-            res.json({message:'create success'})
+            res.json({token: checkToken.tokenCreate(data.ops[0]._id)})
         }
     })
 }
