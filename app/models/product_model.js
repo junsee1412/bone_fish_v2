@@ -86,7 +86,7 @@ Product.updateById = (id_product, iduser, newproduct, rs) => {
             rs(err, null)
         } else {
             const collection = client.db("bone_fish_manager").collection("product")
-            collection.findOneAndUpdate({_id: new ObjectId(id_product), id_user: iduser}, {$set: {product: newproduct}}, (error, result) => {
+            collection.findOneAndUpdate({_id: new ObjectId(id_product), id_user: iduser}, {$set:  newproduct}, (error, result) => {
                 if (error) {
                     rs(null, error)
                     throw error

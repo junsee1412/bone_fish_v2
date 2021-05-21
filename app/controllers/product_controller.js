@@ -74,7 +74,7 @@ exports.apiUpdateProduct = (req, res) => {
     if (iduser===null) {
         res.status(500).send({message: "please login"})
     } else
-    Product.updateById(req.body.idproduct, iduser, req.body.product, (err, data) => {
+    Product.updateById(req.body.idproduct, iduser, {product: req.body.product, stock: Number(req.body.stock), price: Number(req.body.price)}, (err, data) => {
         if (err) res.status(500).send({message: "cannot update"})
         else {
             res.json({message:'update success'})
