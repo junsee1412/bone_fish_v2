@@ -125,13 +125,15 @@ Product.deleteById = (id_product, iduser, rs) => {
             console.log(err)
             rs(err, null)
         } else {
+            console.log(id_product)
             const collection = client.db("bone_fish_manager").collection("product")
             collection.findOneAndDelete({_id: new ObjectId(id_product), id_user: iduser}, (error, result) => {
                 if (error) {
-                    rs(null, error)
+                    rs(error, null)
+                    console.log("roeneee")
                     throw error
                 } else {
-                    console.log('deleteProduct: '+result.value.product)
+                    console.log('deleteProduct: '+result)
                     rs(null, result)
                 }
             })

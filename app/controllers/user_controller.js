@@ -1,13 +1,27 @@
 const User = require('../models/user_model.js')
 const checkToken = require('../models/checkToken.js')
+const { data } = require('jquery')
 
 exports.apiUser = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
     if (iduser===null) {
-        res.status(500).send({message: "please login"})
+        res.json({message: "please login"})
     } else
     User.getAll(iduser,(err, data) => {
-        if (err) res.status(500).send({message: "cannot access"})
+        if (err) res.json({message: "cannot access"})
+        else {
+            res.json(data)
+        }
+    })
+}
+
+exports.getUser = (req, res) => {
+    let iduser = checkToken.tokenToId(req.params.token)
+    if (iduser===null) {
+        res.json({message: "please login"})
+    } else 
+    User.getUser(iduser, (err, data) => {
+        if (err) res.json({message: "cannot access"})
         else {
             res.json(data)
         }
@@ -16,7 +30,7 @@ exports.apiUser = (req, res) => {
 
 exports.apiLogin = (req, res) => {
     User.getLogin(req.body.email, req.body.pass, (err, data) => {
-        if (err) res.status(500).send({message: "cannot login"})
+        if (err) res.json({message: "cannot login"})
         else {
             console.log(data._id)
             res.json({"token": checkToken.tokenCreate(data._id)})
@@ -31,7 +45,7 @@ exports.apiCreateUser = (req, res) => {
         role: false
     })
     User.create(user, (err, data) => {
-        if (err) res.status(500).send({message: "cannot create"})
+        if (err) res.json({message: "cannot create"})
         else {
             res.json({token: checkToken.tokenCreate(data.ops[0]._id)})
         }
@@ -41,10 +55,10 @@ exports.apiCreateUser = (req, res) => {
 exports.apiUpdatePass = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.status(500).send({message: "please login"})
+        res.json({message: "please login"})
     } else
     User.updatePassword(iduser, req.body.newpass, req.body.pass, (err, data) => {
-        if (err) res.status(500).send({message: "cannot update"})
+        if (err) res.json({message: "cannot update"})
         else {
             res.json({message:'update success'})
         }
@@ -54,10 +68,10 @@ exports.apiUpdatePass = (req, res) => {
 exports.apiDeleteUser = (req, res) => {
     let iduser = checkToken.tokenToId(req.body.token)
     if (iduser===null) {
-        res.status(500).send({message: "please login"})
+        res.json({message: "please login"})
     } else
     User.deleteUser(iduser, req.body.pass, (err, data) => {
-        if (err) res.status(500).send({message: "cannot delete"})
+        if (err) res.json({message: "cannot delete"})
         else {
             res.json({message:'delete success'})
         }

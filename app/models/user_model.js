@@ -7,6 +7,26 @@ const User = function(user){
     this.role = user.role
 }
 
+User.getUser = (iduser, rs) => {
+    client.connect(err => {
+        if (err) {
+            console.log(err)
+            rs(err, null)
+        } else {
+            const collection = client.db("bone_fish_manager").collection("user")
+            collection.findOne({id_user: iduser}, (error, result) => {
+                if (error) {
+                    rs(null, {message: 'error'})
+                    console.log(error)
+                } else {
+                    console.log(result)
+                    rs(null, result)
+                }
+            })
+        }
+    })
+}
+
 User.getAll = (iduser, rs) => {
 
     client.connect(err => {
@@ -54,11 +74,15 @@ User.getLogin = (email, pass, rs) => {
             const collection = client.db("bone_fish_manager").collection("user")
             collection.findOne({email: email, pass: pass}, (error, result) => {
                 if (error) {
-                    rs(null, error)
+                    rs(error, null)
                     console.log(error)
-                } else {
+                } else if (result) {
                     console.log(result)
                     rs(null,result)
+                } 
+                else {
+                    console.log(result)
+                    rs('err', null)
                 }
             })
         }
@@ -71,16 +95,26 @@ User.create = (user, rs) => {
             console.log(err)
             rs(err, null)
         } else {
-            insertBrand(user, (data) => {
-                console.log(data)
-                rs(null, data)
-                // data.ops[0]._id to get id insert
+            const collection = client.db("bone_fish_manager").collection("user")
+            collection.findOne({email: user.email}, (erro, rest) => {
+                if (erro) {
+                    console.log(erro)
+                    rs(erro, null)
+                } else if (rest) {
+                    console.log(rest)
+                    rs('err', null)
+                } else {
+                    insertBrand(user, collection, (data) => {
+                        console.log(data)
+                        rs(null, data)
+                        // data.ops[0]._id to get id insert
+                    })
+                }
             })
         }
     })
-    const insertBrand = (user ,callback) => {
+    const insertBrand = (user, collection,callback) => {
         // Insert some documents { id_user: "60a32b8c069c03a5cd7de557", category: "Quat" }
-        const collection = client.db("bone_fish_manager").collection("user")
         collection.insert(user, function(err, result) {
             if (err) {
                 console.log(err)
