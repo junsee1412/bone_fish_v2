@@ -91,7 +91,7 @@ Product.updateById = (id_product, iduser, newproduct, rs) => {
                     rs(null, error)
                     throw error
                 } else {
-                    console.log('odlProduct: '+result.value.product+'\nnewProduct: '+newproduct)
+                    // console.log('odlProduct: '+result.value.product+'\nnewProduct: '+newproduct)
                     rs(null, result)
                 }
             })

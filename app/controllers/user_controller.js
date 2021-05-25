@@ -33,7 +33,7 @@ exports.apiLogin = (req, res) => {
         if (err) res.json({message: "cannot login"})
         else {
             console.log(data._id)
-            res.json({"token": checkToken.tokenCreate(data._id)})
+            res.json({"token": checkToken.tokenCreate(data._id), _id: data._id})
         }
     })
 }

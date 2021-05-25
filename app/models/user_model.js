@@ -14,7 +14,7 @@ User.getUser = (iduser, rs) => {
             rs(err, null)
         } else {
             const collection = client.db("bone_fish_manager").collection("user")
-            collection.findOne({id_user: iduser}, (error, result) => {
+            collection.findOne({_id: new ObjectId(iduser)}, (error, result) => {
                 if (error) {
                     rs(null, {message: 'error'})
                     console.log(error)
