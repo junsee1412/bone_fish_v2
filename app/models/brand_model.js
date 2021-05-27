@@ -106,7 +106,6 @@ Brand.deleteById = (id_brand, iduser, rs) => {
                     rs(null, error)
                     throw error
                 } else {
-                    console.log('deleteBrand: '+result.value.brand)
                     rs(null, result)
                 }
             })

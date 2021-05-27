@@ -106,7 +106,6 @@ Category.deleteById = (id_category, iduser, rs) => {
                     rs(null, error)
                     throw error
                 } else {
-                    console.log('deleteCategory: '+result.value.category)
                     rs(null, result)
                 }
             })

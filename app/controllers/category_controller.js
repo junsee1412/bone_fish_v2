@@ -39,7 +39,8 @@ exports.apiCreateCategory = (req, res) => {
         Category.create(category, (err, data) => {
             if (err) res.json({message: "cannot create"})
             else {
-                res.json({message:'create success'})
+                // res.json({message:'create success'})
+                res.json(data)
             }
         })
     }

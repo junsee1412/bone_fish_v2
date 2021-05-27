@@ -6,10 +6,13 @@ const storage = multer.diskStorage({
     cb(null,'./storage')
   },
   filename: (req, file, cb) => {
-    cb(null,""+Date.now()+"."+file.mimetype.slice(6,12))
+    let type = file.originalname
+    let index = type.lastIndexOf(".")
+      //+file.mimetype.slice(6,12)
+    cb(null,""+Date.now()+type.slice(index, 50))
   }
 })
-const upload = multer({ storage: storage }).single('img')
+const upload = multer({ storage: storage }).single('image')
 
 exports.apiProduct = (req, res) => {
     let iduser = checkToken.tokenToId(req.params.token)
@@ -43,12 +46,14 @@ exports.apiCreateProduct = (req, res) => {
             console.log(error)
             res.json({message: 'cannot upfile 1'})
         } else if (error) {
+            console.log(error)
             res.json({message: 'cannot upfile 2'})
         } else {
             let iduser = checkToken.tokenToId(req.body.token)
             if (iduser===null) {
                 res.json({message: "please login"})
             } else {
+                console.log(req.file.originalbame)
                 const product = new Product({
                     id_brand : req.body.idbrand,
                     id_category : req.body.idcategory,
@@ -58,10 +63,12 @@ exports.apiCreateProduct = (req, res) => {
                     price : Number(req.body.price),
                     img : "/"+req.file.path 
                 })
+                console.log(req.file);
                 Product.create(product, (err, data) => {
                     if (err) res.json({message: "cannot create"})
                     else {
-                        res.json({message:'create success'})
+                        // res.json({message:'create success'})
+                        res.json(data)
                     }
                 })
             }

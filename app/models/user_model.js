@@ -139,10 +139,12 @@ User.updatePassword = (iduser, newpass, pass, rs) => {
                     rs(null, error)
                     console.log(error)
                     return
-                } else {
-                    console.log('odlPass: '+result.value.pass+'\nnewPass: '+newpass)
-                    rs(null, result)
-                }
+                } else if(result.value==null) {
+                    // console.log('odlPass: '+result.value.pass+'\nnewPass: '+newpass)
+                    console.log(result)
+
+                    rs(result, null)
+                } else rs(null, result)
             })
         }
     })

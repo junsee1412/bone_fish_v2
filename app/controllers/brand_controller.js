@@ -39,7 +39,8 @@ exports.apiCreateBrand = (req, res) => {
         Brand.create(brand, (err, data) => {
             if (err) res.json({message: "cannot create"})
             else {
-                res.json({message:'create success'})
+                // res.json({message:'create success'})
+                res.json(data)
             }
         })
     }
