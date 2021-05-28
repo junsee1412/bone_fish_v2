@@ -103,7 +103,7 @@ Category.deleteById = (id_category, iduser, rs) => {
             const collection = client.db("bone_fish_manager").collection("category")
             collection.findOneAndDelete({_id: new ObjectId(id_category), id_user: iduser}, (error, result) => {
                 if (error) {
-                    rs(null, error)
+                    rs(error, null)
                     throw error
                 } else {
                     rs(null, result)

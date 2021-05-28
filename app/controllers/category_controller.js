@@ -67,6 +67,7 @@ exports.apiDeleteCategory = (req, res) => {
     Category.deleteById(req.body.idcategory, iduser, (err, data) => {
         if (err) res.json({message: "cannot delete"})
         else {
+            console.log("del cat")
             res.json({message:'delete success'})
         }
     })

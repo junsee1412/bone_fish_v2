@@ -100,12 +100,14 @@ Brand.deleteById = (id_brand, iduser, rs) => {
             console.log(err)
             rs(err, null)
         } else {
+            console.log(id_brand)
             const collection = client.db("bone_fish_manager").collection("brand")
             collection.findOneAndDelete({_id: new ObjectId(id_brand), id_user: iduser}, (error, result) => {
                 if (error) {
-                    rs(null, error)
+                    rs(error, null)
                     throw error
                 } else {
+                    console.log("delbrand")
                     rs(null, result)
                 }
             })
